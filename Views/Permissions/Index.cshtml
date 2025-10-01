@@ -1,0 +1,36 @@
+﻿@model PermisionsViewModel
+
+<h2>Permissions for Role: @Model.RoleName</h2>
+
+
+<form asp-controller="Permissions" method="post" asp-action="Update" class="d-line">
+    <input type="hidden" asp-for="RoleId" />
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Permission</th>
+            <th>Has Access</th>
+        </tr>
+    </thead>
+    <tbody>
+
+            @for (int i = 0; i < Model.RoleClaims.Count; i++)
+            {
+                <tr>
+                    <td>@Model.RoleClaims[i].Value.Split('.')[1]</td>
+                    <td>@Model.RoleClaims[i].Value.Split('.')[2]</td>
+                    <td>
+                        <input type="hidden" asp-for="RoleClaims[i].Value" />
+                        <input asp-for="RoleClaims[i].Selected" type="checkbox" />
+                    </td>
+                </tr>
+            }
+    </tbody>
+</table>
+    <button type="submit" class="btn btn-secondary">Save</button>
+    <br />
+    <br />
+
+</form>
+
+<a asp-controller="Account" asp-action="Index" class="btn btn-secondary">Back to Users</a>
